@@ -1,5 +1,5 @@
 {
-  "name": "sfu-sfu_fw",
+  "name": "sfu-rcg-sfu_fw",
   "version": "0.1.0",
   "author": "asa188",
   "summary": "SFU Firewall for IPTables",

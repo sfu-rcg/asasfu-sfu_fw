@@ -9,71 +9,59 @@
     * [Setup requirements](#setup-requirements)
     * [Beginning with sfu_fw](#beginning-with-sfu_fw)
 4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Built with Puppet 3.x in mind and CentOS 6 & 7.
+This module is to provide a framework as well as baseline for managing IPTables firewalls and possibly some tcpwrapper links
+It also supports defining these details inside of the Foreman
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This will setup management of your Linux Firewall and allow easy management of the base as well as adding custom rules
 
 ## Setup
 
+include sfu_fw::basefirewall   to receive the default pre and post values(Allow defaults, deny remaining unspecified)
+class { 'sfu_fw::customfirewall':
+  <FIREWALL HASH> (see puppetlabs-firewall module for hash details)
+}
+# If you want to utilize the ssh allow rules based of some specialized trusted hosts list method (see class for details)
+class { 'sfu_fw::ssh':
+  public => (true|false),
+}
+
 ### What sfu_fw affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* IPTables
+* TCPWrappers in some circumstances
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements 
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+puppetlabs-firewall module must be installed in the environment
 
 ### Beginning with sfu_fw
 
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
-
-## Usage
-
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
-
-## Reference
-
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+Refer to Setup [above](#setup)
+(For an extra example of hashes for customfirewall, see http://forge.puppetlabs.com/puppetlabs/firewall).
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Requires: puppetlabs-firewall
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+We'd love to get contributions from you!
+We're always curious how we can make this more functional and modular for everyone's greater good in systems' automation
 
-## Release Notes/Contributors/Etc **Optional**
+License
+-------
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+See LICENSE.md file.
+
+Support
+-------
+
+There is no expectation of support for this module but we will in all attempts work on maintaining it to support our wide uses of linux
