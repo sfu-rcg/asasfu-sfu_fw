@@ -1,8 +1,5 @@
-class sfu_fw::rcgdefaultfwrules {
-# These will apply to any machine on the network
-  $trustedIPsnfs = [ '199.60.0.0/20', '199.60.16.11/32', '142.58.41.0/24', '199.60.17.34/32', '199.60.17.33/32', '199.60.17.53/32', '142.58.53.0/24', '142.58.185.0/24', '142.58.188.0/24' ]
-  $trustedIPsrshd = [ '199.60.1.59', '199.60.1.21', '199.60.1.6', '199.60.1.2', '199.60.1.117' ]
-  $trusted5555 = [ '199.60.0.0/20', '192.168.2.0/24' ]
+class sfu_fw::rcgdefaultfwrules($trustedIPs_nfs = undef, $trustedIPs_rshd = undef, $trustedIPs_5555 = undef) {
+
   define trust_these_IPs_rshd() {
     firewall { "004 accept rshd trusted IPs ${name}":
       proto   => 'tcp',
@@ -41,8 +38,17 @@ class sfu_fw::rcgdefaultfwrules {
       dport   => '5555',
     }
   }  
-  trust_these_IPs_rshd{$trustedIPsrshd:}
-  trust_these_IPs_nfs_tcp{$trustedIPsnfs:}
-  trust_these_IPs_nfs_udp{$trustedIPsnfs:}
-  trust_these_5555{$trusted5555:}
+  if $trustedIPs_nfs {
+    validate_array($trustedIPs_nfs)  
+    trust_these_IPs_nfs_tcp{$trustedIPsnfs:}
+    trust_these_IPs_nfs_udp{$trustedIPsnfs:}
+  }
+  if $trustedIPs_rshd {
+    validate_array($trustedIPs_rshd)  
+    trust_these_IPs_rshd{$trustedIPsrshd:}
+  }
+  if $trustedIPs_5555 {
+    validate_array($trustedIPs_5555)  
+    trust_these_5555{$trusted5555:}
+  }
 }
