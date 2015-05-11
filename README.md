@@ -24,14 +24,16 @@ This will setup management of your Linux Firewall and allow easy management of t
 
 ## Setup
 
-include sfu_fw::basefirewall   to receive the default pre and post values(Allow defaults, deny remaining unspecified)
-class { 'sfu_fw::customfirewall':
-  <FIREWALL HASH> (see puppetlabs-firewall module for hash details)
-}
-# If you want to utilize the ssh allow rules based of some specialized trusted hosts list method (see class for details)
-class { 'sfu_fw::ssh':
-  public => (true|false),
-}
+```puppet
+  include sfu_fw::basefirewall  # to receive the default pre and post values(Allow defaults, deny remaining unspecified)
+  class { 'sfu_fw::customfirewall':
+    # <FIREWALL HASH> (see puppetlabs-firewall module for hash details)
+  }
+  # If you want to utilize the ssh allow rules based of some specialized trusted hosts list method (see class for details)
+  class { 'sfu_fw::ssh':
+    public => (true|false),
+  }
+```
 
 ### What sfu_fw affects
 
