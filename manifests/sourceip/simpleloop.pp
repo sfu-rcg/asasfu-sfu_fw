@@ -20,7 +20,7 @@ define sfu_fw::sourceip::simpleloop($filternum = '010', $servicename = undef, $t
       #$simpleloopd_name = $IPs_count $servicename $proto $filternum
 
       sfu_fw::sourceip::simpleloopd { "${IPs_count} ${servicename} ${proto} ${filternum}":
-        trustedIP   => $trustedIPs[$IPs_count_array],
+        trustedIP   => $trustedIPs[inline_template('<%= @IPs_count_array.shift -%>')],
         filternum   => $filternum,
         servicename => $servicename,
         proto       => $proto,
