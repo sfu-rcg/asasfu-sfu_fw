@@ -1,8 +1,8 @@
-define sfu_fw::sourceip::simpleloopd($filternum = '010', $servicename = undef, $proto, $dport = undef, $sport = undef) {
-  firewall { "${filternum} accept ${proto} ${servicename} connections from these trusted IPs ${name}":
+define sfu_fw::sourceip::simpleloopd($trustedIP, $filternum = '010', $servicename = undef, $proto, $dport = undef, $sport = undef) {
+  firewall { "${filternum} accept ${proto} ${servicename} connections from these trusted IPs ${trustedIP}":
     proto   => $proto,
     action  => 'accept',
-    source  => $name,
+    source  => $trustedIP,
     dport   => $dport,
     sport   => $sport,
   }

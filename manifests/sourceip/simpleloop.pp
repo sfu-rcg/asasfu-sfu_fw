@@ -14,7 +14,13 @@ define sfu_fw::sourceip::simpleloop($filternum = '010', $servicename = undef, $t
     validate_re($filternum, '^[0-9]{3}$', 'Your filternum has to contain a number from 000 to 999 as it is used to organize IPTables rules')
     validate_re($proto,'^[a-zA-Z0-9]+$', 'Apply a proper protocol name to val $proto')
     unless $trustedIPs == [] {
-      sfu_fw::sourceip::simpleloopd { $trustedIPs:
+      $IPs_count = inline_template('<%- count = 0 -%><%- trustedIPs.each do |source_key| -%><%= count -%>,<%- count = count.to_i + 1 -%><%- end -%>')
+      $IPs_count_array = split($IPs_count, ',')
+      
+      #$simpleloopd_name = $IPs_count $servicename $proto $filternum
+
+      sfu_fw::sourceip::simpleloopd { "${IPs_count} ${servicename} ${proto} ${filternum}":
+        trustedIP   => $trustedIPs[$IPs_count_array],
         filternum   => $filternum,
         servicename => $servicename,
         proto       => $proto,
