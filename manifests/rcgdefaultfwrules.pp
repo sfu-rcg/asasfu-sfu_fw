@@ -40,7 +40,7 @@ class sfu_fw::rcgdefaultfwrules($trustedIPs_nfs = undef, $trustedIPs_rshd = unde
   }  
   if $trustedIPs_nfs {
     validate_array($trustedIPs_nfs)  
-    if $trustedIPs_nfs == [] {
+    unless $trustedIPs_nfs == [] {
       trust_these_IPs_nfs_tcp{$trustedIPsnfs:}
       trust_these_IPs_nfs_udp{$trustedIPsnfs:}
     }
