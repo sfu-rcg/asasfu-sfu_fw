@@ -1,4 +1,4 @@
-class sfu_fw::sourceip::simpleloop($filternum = '010', $servicename = undef, $trustedIPs = undef, $proto, $dport = undef, $sport = undef) {
+define sfu_fw::sourceip::simpleloop($filternum = '010', $servicename = undef, $trustedIPs = undef, $proto, $dport = undef, $sport = undef) {
 
  # define trust_these_IPs($filternum = '010', $servicename = undef, $proto, $dport = undef, $sport = undef) {
  #   firewall { "${filternum} accept ${proto} ${servicename} connections from these trusted IPs ${name}":
