@@ -40,15 +40,21 @@ class sfu_fw::rcgdefaultfwrules($trustedIPs_nfs = undef, $trustedIPs_rshd = unde
   }  
   if $trustedIPs_nfs {
     validate_array($trustedIPs_nfs)  
-    trust_these_IPs_nfs_tcp{$trustedIPsnfs:}
-    trust_these_IPs_nfs_udp{$trustedIPsnfs:}
+    if $trustedIPs_nfs == [] {
+      trust_these_IPs_nfs_tcp{$trustedIPsnfs:}
+      trust_these_IPs_nfs_udp{$trustedIPsnfs:}
+    }
   }
   if $trustedIPs_rshd {
     validate_array($trustedIPs_rshd)  
-    trust_these_IPs_rshd{$trustedIPsrshd:}
+    unless $trustedIPs_rshd == [] {
+      trust_these_IPs_rshd{$trustedIPsrshd:}
+    }
   }
   if $trustedIPs_5555 {
     validate_array($trustedIPs_5555)  
-    trust_these_5555{$trusted5555:}
+    unless $trustedIPs_5555 == [] {
+      trust_these_5555{$trusted5555:}
+    }
   }
 }
